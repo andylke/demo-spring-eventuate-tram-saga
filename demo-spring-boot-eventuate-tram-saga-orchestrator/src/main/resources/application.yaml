@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: demo-spring-boot-eventuate-tram-saga-orchestrator
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/eventuate
+    username: root
+    password: mysqlrootpassword
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  sql:
+    init:
+      mode: always
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+eventuatelocal:
+  kafka:
+    bootstrap:
+      servers: localhost:29092
+
+server:
+  port: 8080
