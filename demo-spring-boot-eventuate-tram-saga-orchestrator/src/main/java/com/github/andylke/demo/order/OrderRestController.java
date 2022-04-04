@@ -1,4 +1,4 @@
-package com.github.andylke.demo.transaction;
+package com.github.andylke.demo.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/transactions")
-public class TransactionRestController {
+@RequestMapping(path = "/orders")
+public class OrderRestController {
 
-  @Autowired private TransactionSagaService service;
+  @Autowired private OrderSagaService service;
 
   @PostMapping
-  public AddTransactionResponse addTransaction(@RequestBody AddTransactionRequest request) {
-    return service.addTransaction(request);
+  public AddOrderResponse addOrder(@RequestBody AddOrderRequest request) {
+    return service.addOrder(request);
   }
 }

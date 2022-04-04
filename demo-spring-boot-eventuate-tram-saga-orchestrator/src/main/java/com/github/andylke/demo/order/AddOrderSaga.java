@@ -1,4 +1,4 @@
-package com.github.andylke.demo.transaction;
+package com.github.andylke.demo.order;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +15,21 @@ import io.eventuate.tram.sagas.orchestration.SagaDefinition;
 import io.eventuate.tram.sagas.simpledsl.SimpleSaga;
 
 @Component
-public class AddTransactionSaga implements SimpleSaga<AddTransactionSagaData> {
+public class AddOrderSaga implements SimpleSaga<AddOrderSagaData> {
 
-  private final SagaDefinition<AddTransactionSagaData> sagaDefinition =
+  private final SagaDefinition<AddOrderSagaData> sagaDefinition =
       step()
-          .invokeLocal(this::addTransaction)
-          .withCompensation(this::rejectTransaction)
+          .invokeLocal(this::addOrder)
+          .withCompensation(this::rejectOrder)
           .step()
           .invokeParticipant(this::reserveCredit)
           .onReply(AccountNotFoundReply.class, this::handleAccountNotFound)
           .onReply(InsufficientFundReply.class, this::handleInsufficientFund)
           .step()
-          .invokeLocal(this::approveTransaction)
+          .invokeLocal(this::approveOrder)
           .build();
 
-  @Autowired private TransactionService transactionService;
+  @Autowired private OrderService orderService;
 
   @Autowired private ModelMapper modelMapper;
 
@@ -39,42 +39,42 @@ public class AddTransactionSaga implements SimpleSaga<AddTransactionSagaData> {
   }
 
   @Override
-  public SagaDefinition<AddTransactionSagaData> getSagaDefinition() {
+  public SagaDefinition<AddOrderSagaData> getSagaDefinition() {
     return sagaDefinition;
   }
 
-  private void addTransaction(AddTransactionSagaData sagaData) {
-    AddTransactionResponse response =
-        transactionService.addTransaction(modelMapper.map(sagaData, AddTransactionRequest.class));
-    sagaData.setTransactionId(response.getTransactionId());
+  private void addOrder(AddOrderSagaData sagaData) {
+    AddOrderResponse response =
+        orderService.addOrder(modelMapper.map(sagaData, AddOrderRequest.class));
+    sagaData.setOrderId(response.getOrderId());
   }
 
-  private void rejectTransaction(AddTransactionSagaData sagaData) {
-    transactionService.rejectTransaction(
-        new RejectTransactionRequest(sagaData.getTransactionId(), sagaData.getRemarks()));
+  private void rejectOrder(AddOrderSagaData sagaData) {
+    orderService.rejectOrder(
+        new RejectOrderRequest(sagaData.getOrderId(), sagaData.getRemarks()));
   }
 
-  private CommandWithDestination reserveCredit(AddTransactionSagaData sagaData) {
+  private CommandWithDestination reserveCredit(AddOrderSagaData sagaData) {
     return CommandWithDestinationBuilder.send(
             new ReserveCreditCommand(
                 new ReserveCreditRequest(
-                    sagaData.getCustomerId(), sagaData.getTransactionAmount())))
+                    sagaData.getCustomerId(), sagaData.getOrderAmount())))
         .to("demo-spring-boot-eventuate-tram-saga.reserve-credit")
         .build();
   }
 
   private <T extends Object> void handleAccountNotFound(
-      AddTransactionSagaData sagaData, AccountNotFoundReply reply) {
+      AddOrderSagaData sagaData, AccountNotFoundReply reply) {
     sagaData.setRemarks("Account not found");
   }
 
   private <T extends Object> void handleInsufficientFund(
-      AddTransactionSagaData sagaData, InsufficientFundReply reply) {
+      AddOrderSagaData sagaData, InsufficientFundReply reply) {
     sagaData.setRemarks("Insufficient fund");
   }
 
-  private void approveTransaction(AddTransactionSagaData sagaData) {
-    transactionService.approveTransaction(
-        new ApproveTransactionRequest(sagaData.getTransactionId()));
+  private void approveOrder(AddOrderSagaData sagaData) {
+    orderService.approveOrder(
+        new ApproveOrderRequest(sagaData.getOrderId()));
   }
 }

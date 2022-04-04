@@ -1,6 +1,6 @@
 use eventuate;
 
-insert into account 
+insert into customer_account 
   (customer_id, available_amount, reserved_amount) 
 values 
   (1, 10000, 0),

@@ -1,10 +1,10 @@
 
 
 
-`curl -X POST --header "Content-Type: application/json" -d '{ "customerId": "1", "transactionAmount": 111.11 }' http://localhost:8080/transactions`
+`curl -X POST --header "Content-Type: application/json" -d '{ "customerId": "1", "orderAmount": 111.11 }' http://localhost:8080/orders`
 
 ```
-{"transactionId":1,"customerId":1,"transactionAmount":111.11}
+{"orderId":1,"customerId":1,"orderAmount":111.11}
 ```
 
 

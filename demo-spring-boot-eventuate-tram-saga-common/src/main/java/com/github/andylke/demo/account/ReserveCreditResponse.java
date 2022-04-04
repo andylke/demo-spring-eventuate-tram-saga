@@ -2,6 +2,9 @@ package com.github.andylke.demo.account;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ReserveCreditResponse {
 
   private Long accountId;
@@ -42,5 +45,10 @@ public class ReserveCreditResponse {
 
   public void setReservedAmount(BigDecimal reservedAmount) {
     this.reservedAmount = reservedAmount;
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_CLASS_NAME_STYLE);
   }
 }

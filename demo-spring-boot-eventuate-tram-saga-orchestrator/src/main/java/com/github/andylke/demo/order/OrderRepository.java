@@ -1,4 +1,4 @@
-package com.github.andylke.demo.transaction;
+package com.github.andylke.demo.order;
 
 import java.util.Optional;
 
@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
   @Lock(LockModeType.PESSIMISTIC_READ)
-  Optional<Transaction> findByTransactionId(Long transactionId);
+  Optional<Order> findByOrderId(Long orderId);
 }
