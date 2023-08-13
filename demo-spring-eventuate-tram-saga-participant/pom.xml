@@ -9,10 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.andylke.demo</groupId>
-	<artifactId>demo-spring-boot-eventuate-tram-saga-participant</artifactId>
+	<artifactId>demo-spring-eventuate-tram-saga-participant</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
     <eventuate-platform-dependencies.version>2021.3.RELEASE</eventuate-platform-dependencies.version>
