@@ -9,15 +9,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.andylke.demo</groupId>
-	<artifactId>demo-spring-boot-eventuate-tram-saga</artifactId>
+	<artifactId>demo-spring-eventuate-tram-saga</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
 	<modules>
-    <module>demo-spring-boot-eventuate-tram-saga-common</module>
-		<module>demo-spring-boot-eventuate-tram-saga-orchestrator</module>
-		<module>demo-spring-boot-eventuate-tram-saga-participant</module>
+		<module>demo-spring-eventuate-tram-saga-common</module>
+		<module>demo-spring-eventuate-tram-saga-orchestrator</module>
+		<module>demo-spring-eventuate-tram-saga-participant</module>
 	</modules>
 
 </project>
